@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: CC0-1.0
+# SPDX-FileCopyrightText: NONE
+
+# KiCad 
+*.bak
+*.bck
+*.dcm
+*cache.lib 
+*.kicad_pcb-bak
+*.sch-bak
+*_jlcpcb.csv
+
+*-backups/
+
+*_autosave*
+
+pors485.net
+pors485.xml
+fp-info-cache
+
+# other backup files
+*~
+\#*#
