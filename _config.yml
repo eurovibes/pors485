@@ -1,0 +1,10 @@
+theme: jekyll-theme-minimal
+
+title: Power over RS485 board
+description: A bus power injection and receiving board.
+logo: https://github.com/eurovibes/pors485/raw/master/images/logo.png
+show_downloads: true
+
+github:
+  zip_url: downloads/fabrication.zip
+  tar_url: downloads/fabrication.tar.gz
