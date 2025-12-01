@@ -1,0 +1,23 @@
+Row,References,Part,Value,P/N,Manufacture,Source,Supplier P/N,Link,Footprint,Description,Quantity Per PCB
+1,C101 C102 C103 C104 C105,C,10 µF,,,JLCPCB,,https://jlcpcb.com/partdetail/439567-GRM21BR61H106KE43L/C440198 https://jlcpcb.com/partdetail/30577-1206B475K500NT/C29823,C_0805_2012Metric,Unpolarized capacitor,5
+2,J101 J102 J103 J104,Conn_01x02,PWR,,,,,,TerminalBlock_WAGO_236-402_1x02_P5.00mm_45Degree,"Generic connector, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)",4
+3,L101 L102 L103 L104 L105 L106 L107 L108 L109,L,4.7 mH,,,JLCPCB,,https://jlcpcb.com/partdetail/YJYCOIN-YPRH1508472M/C970556 https://jlcpcb.com/partdetail/188638-FXL0530_4R7M/C177246,L_15x15mm_H8mm,Inductor,9
+4,R101,R,120 Ω,,,JLCPCB,,https://jlcpcb.com/partdetail/18597-1206W4F1200T5E/C17909,R_1206_3216Metric,Resistor,1
+5,U101,TSR3-2450N,TSR3-2450N,,,,,,Converter_DCDC_TRACO_TSR2-24xxN_TSR2-24xxxN_THT,"3A step-down regulator, fixed 5V output voltage, 6.5-36V input voltage, TO-220 compatible LM78xx replacement",1
+
+
+
+
+
+Project info:
+Schematic:,pors485
+Variant:,default
+Revision:,0.1
+Date:,2025-11-29
+KiCad Version:,9.0.6+1
+Statistics:
+Component Groups:,5
+Component Count:,20
+Fitted Components:,20
+Number of PCBs:,1
+Total Components:,20
