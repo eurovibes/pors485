@@ -1,0 +1,87 @@
+# SPDX-License-Identifier: CERN-OHL-S-2.0
+# SPDX-FileCopyrightText: 2025 Benedikt Spranger <b.spranger@linutronix.de>
+
+name: "KiCad CI/CD for Power over RS485"
+
+# Controls when the action will run. Triggers the workflow on push or pull
+# request events but only for the master branch
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - master
+    paths:
+      - '*.kicad_sch'
+      - '*.kicad_pcb'
+      - '*.kibot.yaml'
+      - '.github/workflows/main.yml'
+  pull_request:
+    paths:
+      - '*.kicad_sch'
+      - '*.kicad_pcb'
+      - '*.kibot.yaml'
+      - '.github/workflows/main.yml'
+
+# A workflow run is made up of one or more jobs that can run sequentially or
+# in parallel
+jobs:
+  Fabrication:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: INTI-CMNB/KiBot@v2_k9
+      with:
+        # Required - kibot config file
+        config: pors485.kibot.yaml
+        # optional - prefix to output defined in config
+        dir: 'Fabrication'
+        # optional - schematic file
+        schema: 'pors485.kicad_sch'
+        # optional - PCB design file
+        board: 'pors485.kicad_pcb'
+        verbose: 1
+
+    - name: Create downloads directory
+      run: mkdir downloads
+
+    - name: Gerber Archive
+      uses: thedoctor0/zip-release@master
+      with:
+        filename: 'downloads/gerber.zip'
+        path: 'Fabrication/Gerbers'
+
+    - name: Downloads zip Archive
+      uses: thedoctor0/zip-release@master
+      with:
+        filename: 'downloads/fabrication.zip'
+        path: 'Fabrication'
+
+    - name: Downloads tar Archive
+      uses: thedoctor0/zip-release@master
+      with:
+        filename: 'downloads/fabrication.tar.gz'
+        path: 'Fabrication'
+        type: tar
+
+    - name: Retrieve results
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: Fabrication
+        path: |
+          Fabrication/
+        if-no-files-found: warn
+
+    - name: Deploy Fabrication
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: gh-pages
+        folder: Fabrication
+        target-folder: Fabrication
+
+    - name: Deploy Downloads
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        branch: gh-pages
+        folder: downloads
+        target-folder: downloads

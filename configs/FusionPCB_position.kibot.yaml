@@ -1,0 +1,63 @@
+kibot:
+  version: 1
+
+filters:
+  - name: only_assemble_parts
+    comment: 'Only SMD assemble parts'
+    type: generic
+    include_only:
+      - column: 'assemble'
+        regex: '[yY]'
+
+outputs:
+  - name: 'Fusion_position'
+    comment: "Pick and place file, Fusion style"
+    type: position
+    options:
+      output: '%f_cpl_fusion.%x'
+      format: CSV
+      units: millimeters
+      separate_files_for_front_and_back: false
+      only_smd: true
+      columns:
+        - id: Ref
+          name: Designator
+        - Val
+        - Package
+        - id: PosX
+          name: "Mid X"
+        - id: PosY
+          name: "Mid Y"
+        - id: Rot
+          name: Rotation
+        - id: Side
+          name: Layer
+
+  - name: 'Fusion_bom'
+    comment: "BoM for Fusion"
+    type: bom
+    options:
+      output: '%f_%i_fusion.%x'
+      exclude_filter: 'only_assemble_parts'
+      ref_separator: ','
+      columns:
+        - field: References
+          name: Designator
+        - field: 'mpn'
+          name: MPN
+        - 'Quantity Per PCB'
+        - field: SupplLink
+          name: Link
+      csv:
+        hide_pcb_info: true
+        hide_stats_info: true
+        quote_all: true
+
+  - name: 'Fusion_assembly'
+    comment: "Print Fusion assembly files"
+    type: pdf_pcb_print
+    dir: .
+    layers:
+      - layer: F.CrtYd
+      - layer: F.Fab
+      - layer: Edge.Cuts
